@@ -211,8 +211,8 @@ class ActivityDetail extends Component {
 
               }
               {
-                !isParticipant ? <button id="btnParticipar" className="participate btn btn-primary"
-                                         onClick={this.participateInActivity.bind(this)}>
+                !participate ? <button id="btnParticipar" className="participate btn btn-primary"
+                  onClick={this.participateInActivity.bind(this)}>
                   Participar
                 </button> : ''
               }
@@ -220,9 +220,16 @@ class ActivityDetail extends Component {
               {
                 currentUser !== undefined && currentUser.username === currentActivity.username ?
                   <button id="btnListaParticipantes" className="userlist btn btn-success"
-                          onClick={this.showActivityParticipants.bind(this)}>
+                    onClick={this.showActivityParticipants.bind(this)}>
                     Lista Participantes
                   </button> : ''
+              }
+
+              {
+                isParticipant ? 
+                  <div className="alert alert-primary" role="alert">
+                    Ya estás inscrito a esta actividad.
+                  </div> : ''
               }
               <br/>
               <br/>
