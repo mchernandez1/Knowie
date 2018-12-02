@@ -73,6 +73,11 @@ Meteor.methods({
     const answer = Activities.findOne({_id: activityId});
     return answer;
   },
+  'activities.busqueda'(busqueda){
+    check(busqueda, String);
+    let resultado = Activities.find({'title':{$regex:busqueda}});
+    return resultado.fetch();
+  },
   'activities.twitter'(nombreEvento, cantidadTwits) {
 
     //La manera que funciona pero muy poco nivel
@@ -84,7 +89,7 @@ Meteor.methods({
       }
     )
     let accessToken = JSON.parse(access.content).access_token;
-    let result = HTTP.call('GET', 'https://api.twitter.com/1.1/search/tweets.json?q=%3A'+nombreEvento+'&count='+cantidadTwits+'&result_type=recent', {
+    let result = HTTP.call('GET', 'https://api.twitter.com/1.1/search/tweets.json?q=%3A'+nombreEvento+'%20%23knowie&count='+cantidadTwits+'&result_type=recent', {
             headers: {
               Authorization: 'Bearer ' + accessToken
             }

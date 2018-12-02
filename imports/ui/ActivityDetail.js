@@ -5,6 +5,7 @@ import {withTracker} from 'meteor/react-meteor-data';
 import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import InfiniteScroll from 'react-infinite-scroller';
+import Ima from 'react-image';
 
 class ActivityDetail extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class ActivityDetail extends Component {
       cantidadTwits:10
     };
   }
+
 
   componentDidMount() {
 
@@ -86,19 +88,6 @@ class ActivityDetail extends Component {
     ));
   }
 
-  renderTwits() {
-    return this.state.twits.map((twit, i) => (
-      <div key={'twits' + i} className="row">
-        <div className="col-4">
-          <img className="img-twits" src={twit.user.profile_image_url} alt="imagen_perfil"/>
-        </div>
-        <div className="col-8">
-          <p>{twit.text}</p>
-        </div>
-      </div>
-    ));
-  }
-
   cargarMas(){
     Meteor.call('activities.twitter', 'Uniandes', this.state.cantidadTwits, (err, twits) => {
       // console.log('twits', twits);
@@ -161,12 +150,14 @@ class ActivityDetail extends Component {
     var items = [];
     {this.state.twits[0] !== undefined ? this.state.twits.map((twit, i) => (
       items.push(
-      <div key={'twits' + i} className="row">
-        <div className="col-4">
-          <img className="img-twits" src={twit.user.profile_image_url} alt="imagen_perfil"/>
+      <div key={'twits' + i} className="row filaTwits">
+        <div className="col-3">
+          <img className="imagenTwitter" src={twit.user.profile_image_url} alt="imagen_perfil"/>
         </div>
-        <div className="col-8">
-          <p>{twit.text}</p>
+        <div className="col-9">
+          <h5 className="nombreTwitter">{twit.user.name}</h5>
+          <h5 className="usuarioTwitter">@{twit.user.screen_name}</h5>
+          <p className="textoTwitter">{twit.text}</p>
         </div>
       </div>
     ))) : ''}
@@ -176,7 +167,7 @@ class ActivityDetail extends Component {
       <div>
         <Navbar/>
         <br/>
-        <div className="container col-md-6" id="detailContainer">
+        <div className="container col-md-8" id="detailContainer">
           <div id="titulo-detail">
             <h3 id="titulo">{currentActivity.title}</h3>
           </div>
@@ -235,14 +226,14 @@ class ActivityDetail extends Component {
               <br/>
             </div>
             <div className="col-6">
-              <p className="label-info" id="twits">Twits</p>
-              <div id="container-twits" ref={(ref)=>this.scrollParentRef = ref}>
+              <p className="label-info" id="twits">Actividad Reciente</p>
+              <div id="container-twits" className="col-12">
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={this.cargarMas.bind(this)}
                   hasMore={this.state.hayMasTwits}
-                  getScrollParent={() => this.scrollParentRef}
-                  loader={<div className="loader">Loading ...</div>}>
+                  useWindow = {false}
+                  loader={<p>Loading, Please Wait</p>}>
                   {items}
                 </InfiniteScroll>
               </div>

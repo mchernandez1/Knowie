@@ -92,6 +92,34 @@ body {
   padding-left: 0;
 }
 
+#barraBusqueda{
+  font-size: 1rem;
+  width: 6rem;
+}
+
+#filaBusqueda{
+  height: 2rem;
+}
+
+#divlupa{
+  text-align: right;
+  width: 100%;
+  font-size: 0rem;
+}
+
+#lupa{
+  width: 100%;
+  height: 100%;
+  margin-left: 2rem;
+}
+
+#barraTextoBusqueda{
+  border-radius: 3rem;
+  text-align: center;
+  margin-left: -3rem;
+  width: 11.1rem;
+}
+
 #container-organizador{
   background: #6065A3;
   color: #E5E5E5;
@@ -230,19 +258,47 @@ body {
 }
 
 #twits{
+  font-size: 1.5rem;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Dosis', sans-serif;
 }
 
 #container-twits{
+  padding: 0.1rem !important;
   background: white;
-  height: 10rem;
   text-align: center;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
+  padding-top: 0.1rem;
+  position: page;
+  height: 20rem;
+  overflow: scroll;
 }
 
-.texto-participantes{
+.filaTwits{
+  padding-top: 0.1rem;
+  background: #aba9a92b;
+  margin: 0.1rem !important;
+  margin-top: 0.2rem !important;
+}
 
+.imagenTwitter{
+  padding-top: 1rem;
+}
+
+.nombreTwitter{
+  font-family: 'Dosis', sans-serif;
+  font-weight: bold;
+}
+
+.usuarioTwitter{
+  font-family: 'Open Sans', sans-serif;
+  color: #6065A3;
+  font-size: 1rem;
+}
+
+.textoTwitter{
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
 }
 
 /* Icon Grow */
