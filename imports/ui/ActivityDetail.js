@@ -4,6 +4,7 @@ import {Meteor} from 'meteor/meteor';
 import {withTracker} from 'meteor/react-meteor-data';
 import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class ActivityDetail extends Component {
   constructor(props) {
@@ -14,6 +15,9 @@ class ActivityDetail extends Component {
       currentUser: {},
       showParticipants: false,
       deleted: false,
+      twits: [],
+      hayMasTwits: false,
+      cantidadTwits:10
     };
   }
 
@@ -31,8 +35,22 @@ class ActivityDetail extends Component {
         currentUser: Meteor.user(),
       });
     });
-
-
+    //Cambiar uniandes por el nombre del detail
+    Meteor.call('activities.twitter', 'Uniandes', this.state.cantidadTwits, (err, twits) => {
+      // console.log('twits', twits);
+      let hayMas = false;
+      let sumarTwits = this.state.cantidadTwits;
+      if (twits.length===10)
+      {
+        hayMas=true;
+        sumarTwits = sumarTwits+10;
+      }
+      this.setState({
+        twits: twits,
+        hayMasTwits:hayMas,
+        cantidadTwits:sumarTwits
+      })
+    });
   }
 
 
@@ -68,10 +86,35 @@ class ActivityDetail extends Component {
     ));
   }
 
-  renderTwits(){
-    return <p className="texto-info">
-      Proximamente API twitter
-    </p>
+  renderTwits() {
+    return this.state.twits.map((twit, i) => (
+      <div key={'twits' + i} className="row">
+        <div className="col-4">
+          <img className="img-twits" src={twit.user.profile_image_url} alt="imagen_perfil"/>
+        </div>
+        <div className="col-8">
+          <p>{twit.text}</p>
+        </div>
+      </div>
+    ));
+  }
+
+  cargarMas(){
+    Meteor.call('activities.twitter', 'Uniandes', this.state.cantidadTwits, (err, twits) => {
+      // console.log('twits', twits);
+      let hayMas = false;
+      let sumarTwits = this.state.cantidadTwits;
+      if (twits.length===10)
+      {
+        hayMas=true;
+        sumarTwits = sumarTwits+10;
+      }
+      this.setState({
+        twits: twits,
+        hayMasTwits:hayMas,
+        cantidadTwits:sumarTwits
+      })
+    });
   }
 
   render() {
@@ -84,14 +127,14 @@ class ActivityDetail extends Component {
     }
 
 
-    if(currentActivity.participants !== undefined && currentUser !== undefined){
-      if(currentActivity.participants.includes(currentUser.username) || currentActivity.capacity === 0){
+    if (currentActivity.participants !== undefined && currentUser !== undefined) {
+      if (currentActivity.participants.includes(currentUser.username) || currentActivity.capacity === 0) {
         participate = true;
       }
     }
 
-    if(currentActivity.participants !== undefined && currentUser !== undefined){
-      if(currentActivity.participants.includes(currentUser.username)){
+    if (currentActivity.participants !== undefined && currentUser !== undefined) {
+      if (currentActivity.participants.includes(currentUser.username)) {
         isParticipant = true;
       }
     }
@@ -114,6 +157,19 @@ class ActivityDetail extends Component {
       );
 
     }
+
+    var items = [];
+    {this.state.twits[0] !== undefined ? this.state.twits.map((twit, i) => (
+      items.push(
+      <div key={'twits' + i} className="row">
+        <div className="col-4">
+          <img className="img-twits" src={twit.user.profile_image_url} alt="imagen_perfil"/>
+        </div>
+        <div className="col-8">
+          <p>{twit.text}</p>
+        </div>
+      </div>
+    ))) : ''}
 
 
     return (
@@ -180,8 +236,15 @@ class ActivityDetail extends Component {
             </div>
             <div className="col-6">
               <p className="label-info" id="twits">Twits</p>
-              <div id="container-twits">
-                {this.renderTwits()}
+              <div id="container-twits" ref={(ref)=>this.scrollParentRef = ref}>
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={this.cargarMas.bind(this)}
+                  hasMore={this.state.hayMasTwits}
+                  getScrollParent={() => this.scrollParentRef}
+                  loader={<div className="loader">Loading ...</div>}>
+                  {items}
+                </InfiniteScroll>
               </div>
               {
                 this.state.showParticipants ?
