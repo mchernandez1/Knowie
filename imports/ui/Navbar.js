@@ -23,6 +23,10 @@ export default class Navbar extends Component {
         <div className="row" id="">
 
           {!!Meteor.user() && (Meteor.user().username === 'Deportes' || Meteor.user().username === 'Decanatura' || Meteor.user().username === 'CTP' || Meteor.user().username === 'Uniandinos' || Meteor.user().username === 'ANDAR') ? <div className="col nav-item navbar-tab">
+            <Link className="nav-link hvr-underline-from-center" to="/admin">Actividades Creadas</Link>
+          </div> : ''}
+
+          {!!Meteor.user() && (Meteor.user().username === 'Deportes' || Meteor.user().username === 'Decanatura' || Meteor.user().username === 'CTP' || Meteor.user().username === 'Uniandinos' || Meteor.user().username === 'ANDAR') ? <div className="col nav-item navbar-tab">
             <Link className="nav-link hvr-underline-from-center" to="/new">Crear Actividad</Link>
           </div> : ''}
 

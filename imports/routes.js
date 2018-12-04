@@ -7,6 +7,7 @@ import App from './ui/App.js';
 
 
 import NewActivity from './ui/NewActivity.js';
+import AdminActivities from './ui/AdminActivities.js';
 import ActivityDetail from './ui/ActivityDetail.js';
 
 
@@ -15,6 +16,7 @@ export const AppRoutes = () => (
     <div>
       <Route exact path='/' component={App}/>
       <Route exact path='/new' component={NewActivity}/>
+      <Route exact path='/admin' component={AdminActivities}/>
       <Route exact path='/activity/:id' component={ActivityDetail}/>
     </div>
   </Router>
