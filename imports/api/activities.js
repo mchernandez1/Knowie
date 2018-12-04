@@ -121,5 +121,10 @@ Meteor.methods({
     //   }
     // }
     // )
+  },
+  'activities.findbyadmin'(adminUsername) {
+    check(adminUsername, String);
+    let resultado = Activities.find({'username': adminUsername});
+    return resultado;
   }
 });

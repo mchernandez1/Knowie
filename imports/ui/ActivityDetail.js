@@ -244,11 +244,14 @@ class ActivityDetail extends Component {
                     <ul className="list-group">
                       {this.renderParticipantsList()}
                     </ul>
+                    <br/>
                   </div> : ''
               }
             </div>
           </div>
         </div>
+        <br/>
+        <br/>
       </div>
     );
   }
