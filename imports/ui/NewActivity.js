@@ -24,6 +24,7 @@ class NewActivity extends Component {
     let success = true;
 
     const title = ReactDOM.findDOMNode(this.refs.titleActivity).value.trim();
+    const hashtag = ReactDOM.findDOMNode(this.refs.hashtagActivity).value.trim();
     const place = ReactDOM.findDOMNode(this.refs.placeActivity).value.trim();
     const date = ReactDOM.findDOMNode(this.refs.dateActivity).value.trim();
     const initTime = ReactDOM.findDOMNode(this.refs.initTimeActivity).value.trim();
@@ -82,7 +83,7 @@ class NewActivity extends Component {
 
     if(success) {
 
-      Meteor.call('activities.insert', title, place, date, initTime, finishTime, capacity, price);
+      Meteor.call('activities.insert', title, place, date, initTime, finishTime, capacity, price, hashtag);
 
       ReactDOM.findDOMNode(this.refs.titleActivity).value = '';
       ReactDOM.findDOMNode(this.refs.placeActivity).value = '';
@@ -91,6 +92,7 @@ class NewActivity extends Component {
       ReactDOM.findDOMNode(this.refs.finishTimeActivity).value = '';
       ReactDOM.findDOMNode(this.refs.capacityActivity).value = '';
       ReactDOM.findDOMNode(this.refs.priceActivity).value = '';
+      ReactDOM.findDOMNode(this.refs.hashtagActivity).value = '';
 
       this.setState({
         finished: true,
@@ -208,6 +210,17 @@ class NewActivity extends Component {
                   required
                 />
                 <br/>
+                  <label className="letraBonita">Hashtag Twitter: </label>
+                  <br/>
+                  <input
+                      className="form-control"
+                      type="text"
+                      ref="hashtagActivity"
+                      placeholder="Hashtag para ver actividades en twitter"
+                      size="70"
+                      required
+                  />
+                  <br/>
                 <label className="letraBonita">Precio: </label>
                 <br/>
                 <input

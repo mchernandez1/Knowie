@@ -116,8 +116,8 @@ body {
 #barraTextoBusqueda{
   border-radius: 3rem;
   text-align: center;
-  margin-left: -3rem;
-  width: 11.1rem;
+  margin-left: 1.7rem;
+  width: 19rem;
 }
 
 #container-organizador{
@@ -263,6 +263,22 @@ body {
   font-family: 'Dosis', sans-serif;
 }
 
+#sinTwits{
+  color: #898888;
+  background-color: #aba9a92b;
+  height: 19.8rem;
+  padding-top: 5rem;
+}
+
+#logoTwit{
+  padding-top: 1.5rem;
+}
+
+#tituloNoTwit{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 #container-twits{
   padding: 0.1rem !important;
   background: white;
@@ -271,7 +287,7 @@ body {
   padding-top: 0.1rem;
   position: page;
   height: 20rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .filaTwits{
