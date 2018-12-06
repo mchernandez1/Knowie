@@ -18,3 +18,6 @@ export default class AccountsUIWrapper extends Component {
     return <span ref="container" />;
   }
 }
+
+//Recomiendo que se cree la carpeta Collections donde se almacena la lógica de las diferentes bases de datos que se tienen.
+//Esto es útil al realizar su manejo a través del cliente
