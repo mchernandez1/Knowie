@@ -99,6 +99,8 @@ Meteor.methods({
             }
           });
     return JSON.parse(result.content).statuses;
+    
+    // Está parte se pudo omitir, es decir, se podría eliminar por ahora. Ya que todo está documentado
 
     //La manera más cool pero re imposible hasta el momento
     // return HTTP.call('POST', 'https://api.twitter.com/oauth2/token', {
