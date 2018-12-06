@@ -30,6 +30,8 @@ class App extends Component {
   }
 }
 
+//En el HTML del cliente, es decir, main.html se puede agregar todo lo que es estático. Como sus nombres y los derechos de autor.
+
 export default withTracker(() => {
   return {
     currentUser: Meteor.user(),
