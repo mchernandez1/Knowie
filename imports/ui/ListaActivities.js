@@ -88,16 +88,14 @@ class ListaActivities extends Component {
         <div className="col-3" id="sinEspacio">
           <div id="container-organizador">
             <p>Organizadores</p>
-            <div className="row" id="filaBusqueda">
               {/*<div id="divlupa" className="col-3">*/}
                 {/*<img id="lupa" src="search.svg" alt=""/>*/}
               {/*</div>*/}
-              <div id="barraBusqueda" className="col-9">
+              <div id="barraBusqueda">
                 <form onSubmit={this.buscarEvento.bind(this)}>
                 <input id="barraTextoBusqueda" type="text" placeholder="Buscar Evento"
                        ref={(ref)=>this.textoBusqueda = ref}/>
                 </form>
-              </div>
             </div>
           </div>
           {this.renderOrganizadores()}

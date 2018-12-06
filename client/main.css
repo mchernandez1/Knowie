@@ -94,7 +94,6 @@ body {
 
 #barraBusqueda{
   font-size: 1rem;
-  width: 6rem;
 }
 
 #filaBusqueda{
@@ -116,7 +115,6 @@ body {
 #barraTextoBusqueda{
   border-radius: 3rem;
   text-align: center;
-  margin-left: 1.7rem;
   width: 19rem;
 }
 
