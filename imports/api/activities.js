@@ -15,8 +15,9 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'activities.insert'(title, place, date, initTime, finishTime, capacity, price) {
+  'activities.insert'(title, place, date, initTime, finishTime, capacity, price, hashtag) {
     check(title, String);
+    check(hashtag, String);
     check(place, String);
     check(capacity, Number);
     check(price, Number);
@@ -34,6 +35,7 @@ Meteor.methods({
       finishTime,
       capacity,
       price,
+      hashtag,
       createdAt: new Date(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
@@ -78,9 +80,11 @@ Meteor.methods({
     let resultado = Activities.find({'title':{$regex:busqueda}});
     return resultado.fetch();
   },
-  'activities.twitter'(nombreEvento, cantidadTwits) {
+  'activities.twitter'(activityId, cantidadTwits) {
 
     //La manera que funciona pero muy poco nivel
+    check(activityId, String);
+    const answer = Activities.findOne({_id: activityId});
     let access =  HTTP.call('POST', 'https://api.twitter.com/oauth2/token', {
         params: {grant_type: 'client_credentials'},
         headers: {
@@ -89,7 +93,7 @@ Meteor.methods({
       }
     )
     let accessToken = JSON.parse(access.content).access_token;
-    let result = HTTP.call('GET', 'https://api.twitter.com/1.1/search/tweets.json?q=%3A'+nombreEvento+'%20%23knowie&count='+cantidadTwits+'&result_type=recent', {
+    let result = HTTP.call('GET', 'https://api.twitter.com/1.1/search/tweets.json?q=%23'+answer.hashtag+'%20%23knowie&count='+cantidadTwits+'&result_type=recent', {
             headers: {
               Authorization: 'Bearer ' + accessToken
             }

@@ -22,14 +22,12 @@ class ActivityDetail extends Component {
     };
   }
 
-
   componentDidMount() {
 
     let path = window.location.href;
     let splitPath = path.split('/');
 
     const activityId = splitPath[splitPath.length - 1];
-    console.log(activityId);
 
     Meteor.call('activities.findone', activityId, (err, activity) => {
       this.setState({
@@ -38,7 +36,7 @@ class ActivityDetail extends Component {
       });
     });
     //Cambiar uniandes por el nombre del detail
-    Meteor.call('activities.twitter', 'Uniandes', this.state.cantidadTwits, (err, twits) => {
+    Meteor.call('activities.twitter', activityId, this.state.cantidadTwits, (err, twits) => {
       // console.log('twits', twits);
       let hayMas = false;
       let sumarTwits = this.state.cantidadTwits;
@@ -89,7 +87,7 @@ class ActivityDetail extends Component {
   }
 
   cargarMas(){
-    Meteor.call('activities.twitter', 'Uniandes', this.state.cantidadTwits, (err, twits) => {
+    Meteor.call('activities.twitter', this.state.currentActivity._id, this.state.cantidadTwits, (err, twits) => {
       // console.log('twits', twits);
       let hayMas = false;
       let sumarTwits = this.state.cantidadTwits;
@@ -193,6 +191,10 @@ class ActivityDetail extends Component {
                 <p className="label-info">Precio:</p>
                 <p className="texto-info">{currentActivity.price}</p>
               </div>
+              <div className="row">
+                <p className="label-info">Hashtag Twitter:</p>
+                <p className="texto-info">#{currentActivity.hashtag} #knowie</p>
+              </div>
               <br/>
               {
                 currentUser !== undefined && currentUser.username === currentActivity.username ?
@@ -227,7 +229,8 @@ class ActivityDetail extends Component {
             </div>
             <div className="col-6">
               <p className="label-info" id="twits">Actividad Reciente</p>
-              <div id="container-twits" className="col-12">
+                <div id="container-twits" className="col-12">
+                {this.state.twits.length>0?
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={this.cargarMas.bind(this)}
@@ -236,7 +239,12 @@ class ActivityDetail extends Component {
                   loader={<p>Loading, Please Wait</p>}>
                   {items}
                 </InfiniteScroll>
-              </div>
+              :<div id="sinTwits">
+                <h5 id="tituloNoTwit">Unete a la comunidad tuiteando con nuestro hashtag</h5>
+                 <img id="logoTwit" src="/twitter.png" alt="Logo Twitter"/>
+               </div>
+                }
+                </div>
               {
                 this.state.showParticipants ?
                   <div>
